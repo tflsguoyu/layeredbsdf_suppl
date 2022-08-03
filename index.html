@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Layered BSDF</title>
+	<link rel="stylesheet" type="text/css" href=".html/style.css">
+	<script type="text/JavaScript" src=".html/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src=".html/jquery.smooth-scroll.min.js"></script>
+	<script type="text/JavaScript" src=".html/code.js"></script>
+</head>
+
+<body>
+	<div class="wrap">
+		<h2>
+			Position-Free Monte Carlo Simulation for Arbitrary Layered BSDFs<br>
+		</h2>
+		<h1>
+			Supplemental Materials
+		</h1>
+		<center style="font-size: 18px">
+			Yu Guo<sup>1</sup>, Miloš Hašan<sup>2</sup> and Shuang Zhao<sup>1</sup>
+		</center>
+		<center style="font-size: 16px; margin-bottom: 20pt">
+			<sup>1</sup>University of California, Irvine
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<sup>2</sup>Adobe Research
+		</center>
+
+		<div class="box" style="width: 400px">
+			<img alt="" src=".html/tap.png">
+			<span style="vertical-align: 7pt">Click the images to see <b>full-resolution</b> versions.</span>
+		</div>
+
+		<div id="menu">
+			<ul>
+				<li><a href="#">Top</a></li>
+				<li><a href="#video">Supplemental video</a></li>	
+				<li><a href="#uni-bi">Addtional renderings</a></li>	
+				<li><a href="#pdf">Pdf evaluation</a></li>	
+				<li><a href="#validation">Validation</a></li>
+				<li><a href="#bsdfplot">BSDF evaluation</a></li>	
+				<li><a href="#cloth">Other: cloth</a></li>	
+				<li><a href="#jade">Other: jade</a></li>
+				<li><a href="#magnifier">Other: magnifier</a></li>
+				<li><a href="#ui">Interactive tool</a></li>
+			</ul>
+		</div>
+
+		<div class="subtitle" id="uni-bi">Supplemental Video</div>
+		<div style="text-align:center;">
+			<iframe width="960" height="540"
+				src="https://www.youtube.com/embed/sLLhimyXXko">
+			</iframe>
+		</div>
+	
+		<div class="subtitle" id="uni-bi">Additional Renderings</div>
+		<p>
+			Here we show equal-spp renderings generated with our uni-directional (with nesting BSDFs) and bi-directional (with the explicit implementation) estimators.
+			For the timings, please see Table 2 in the paper.
+		</p>
+		<table>
+			<tr>
+				<td><h4>Unidirectional</h4></td>
+				<td><h4>Bidirectional</h4></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/vase_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/vase_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/vase.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/vase.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/globe1_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/globe1_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/globe1.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/globe1.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/zhaoyun_bg1_back_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/zhaoyun_bg1_back_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/zhaoyun_bg1_back.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/zhaoyun_bg1_back.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/magnify_con_con_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/magnify_con_con_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/magnify_con_con.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/magnify_con_con.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/satin_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/satin_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/satin.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/satin.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/twill_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/twill_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/twill.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/twill.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/velvet_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/velvet_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/velvet.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/velvet.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/gabardine_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/gabardine_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/gabardine.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/gabardine.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/kettle_drop_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/kettle_drop_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/kettle_drop.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/kettle_drop.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/kettle_logo_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/kettle_logo_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/kettle_logo.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/kettle_logo.jpg"></a></td>
+			</tr>
+			<tr>
+				<td><a href="images/unidir-bidir/kettle_all_uni.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/kettle_all_uni.jpg"></a></td>
+				<td><a href="images/unidir-bidir/kettle_all.jpg"><img class="uni-bi" alt="" src="images/unidir-bidir/kettle_all.jpg"></a></td>
+			</tr>
+		</table>
+
+
+		<div class="subtitle" id="pdf">Pdf Evaluation</div>
+		<ul>
+			<li>Properties of Banches from top to bottom:</li>
+			<li>1. Roughness: 0.005|0.005, IOR:1.5, sigmaT=1, g=0</li>
+			<li>2. Roughness: 0.005|0.1, IOR:1.5, sigmaT=1, g=0</li>
+			<li>3. Roughness: 0.1|0.005, IOR:1.5, sigmaT=1, g=0</li>
+			<li>4. Roughness: 0.1|0.1, IOR:1.5, sigmaT=1, g=0</li>
+		</ul>
+		<table>
+			<tr>
+				<td><b>Reference</b></td>
+				<td><b>MIS (accurate pdf)</b></td>
+				<td><b>MIS (approximate pdf)</b></td>
+				<td><b>no MIS</b></td>
+			</tr>
+			<tr>
+				<td><a href="images/pdf/mi_trt_400spp_20min_ref.png"><img class="pdf" alt="" src="images/pdf/mi_trt_400spp_20min_ref.png"></a></td>
+				<td><a href="images/pdf/mi_acr_64spp_14min.png"><img class="pdf" alt="" src="images/pdf/mi_acr_64spp_14min.png"></a></td>
+				<td><a href="images/pdf/mi_trt_64spp_4.1min.png"><img class="pdf" alt="" src="images/pdf/mi_trt_64spp_4_1min.png"></a></td>
+				<td><a href="images/pdf/mi_noMIS_80spp_4.2min.png"><img class="pdf" alt="" src="images/pdf/mi_noMIS_80spp_4_2min.png"></a></td>
+			</tr>
+			<tr>
+				<td> </td>
+				<td><b>64spp 14min</b></td>
+				<td><b>64spp 4.1min</b></td>
+				<td><b>80spp 4.2min</b></td>
+			</tr>
+		</table>
+
+		<table>
+			<tr>
+				<td><br><br><br><br><br> <b>Bench 1 </b></td>
+				<td><a href="images/pdf/0.005_0.005/pdf.png"><img class="pdflobe" alt="" src="images/pdf/0.005_0.005/pdf.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br> <b>Bench 2 </b></td>
+				<td><a href="images/pdf/0.005_0.1/pdf.png"><img class="pdflobe" alt="" src="images/pdf/0.005_0.1/pdf.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br> <b>Bench 3 </b></td>
+				<td><a href="images/pdf/0.1_0.005/pdf.png"><img class="pdflobe" alt="" src="images/pdf/0.1_0.005/pdf.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br> <b>Bench 4 </b></td>
+				<td><a href="images/pdf/0.1_0.1/pdf.png"><img class="pdflobe" alt="" src="images/pdf/0.1_0.1/pdf.png"></a></td>
+			</tr>
+		</table>
+
+		<div class="subtitle" id="validation">Validation (Equal time comparison)</div>
+		<h3>1. surface-medium-surface (1)</h3>
+		<ul>
+			<li>Roughdielectric surface: IOR:1.5, alpha=0.05</li>
+			<li>Isotropic homogeneous Medium: sigmaT:1, albedo:(0.5,0.7,0.95), hg(g=0.5)</li>
+			<li>Roughconductor surface: Cu, alpha=0.05</li>
+		</ul>
+		<table>
+			<tr>
+				<td><b>Global PT</b></td>
+				<td><b>Global BDPT</b></td>
+				<td><b>MLT</b></td>
+				<td><b>Our Unidir</b></td>
+				<td><b>Our Bidir</b></td>
+			</tr>
+			<tr>
+				<td><a href="images/val1_plane/plane_14s_pt_32spp.png"><img class="five" alt="" src="images/val1_plane/plane_14s_pt_32spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_14s_bdpt_10spp.png"><img class="five" alt="" src="images/val1_plane/plane_14s_bdpt_10spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_14s_mlt_30spp.png"><img class="five" alt="" src="images/val1_plane/plane_14s_mlt_30spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_14s_uni_16spp.png"><img class="five" alt="" src="images/val1_plane/plane_14s_uni_16spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_14s_bi_8spp.png"><img class="five" alt="" src="images/val1_plane/plane_14s_bi_8spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+			</tr>
+			<tr>
+				<td><a href="images/val1_plane/plane_180s_pt_400spp.png"><img class="five" alt="" src="images/val1_plane/plane_180s_pt_400spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_180s_bdpt_120spp.png"><img class="five" alt="" src="images/val1_plane/plane_180s_bdpt_120spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_180s_mlt_850spp.png"><img class="five" alt="" src="images/val1_plane/plane_180s_mlt_850spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_180s_uni_200spp.png"><img class="five" alt="" src="images/val1_plane/plane_180s_uni_200spp.png"></a></td>
+				<td><a href="images/val1_plane/plane_180s_bi_108spp.png"><img class="five" alt="" src="images/val1_plane/plane_180s_bi_108spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+			</tr>
+		</table>
+
+		<br>
+
+		<h3>2. surface-medium-surface (2)</h3>
+		<ul>
+			<li>Roughdielectric surface: IOR:1.5, alpha=0.05</li>
+			<li>Isotropic homogeneous Medium: sigmaT:2, albedo:(0.5,0.7,0.95), hg(g=0.9)</li>
+			<li>Roughconductor surface: Cu, alpha=0.01</li>
+		</ul>
+		<table>
+			<tr>
+				<td><b>Global PT</b></td>
+				<td><b>Global BDPT</b></td>
+				<td><b>MLT</b></td>
+				<td><b>Our Unidir</b></td>
+				<td><b>Our Bidir</b></td>
+			</tr>
+			<tr>
+				<td><a href="images/val2_plane/plane_22s_pt_40spp.png"><img class="five" alt="" src="images/val2_plane/plane_22s_pt_40spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_22s_bdpt_8spp.png"><img class="five" alt="" src="images/val2_plane/plane_22s_bdpt_8spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_22s_mlt_32spp.png"><img class="five" alt="" src="images/val2_plane/plane_22s_mlt_32spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_22s_uni_20spp.png"><img class="five" alt="" src="images/val2_plane/plane_22s_uni_20spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_22s_bi_12spp.png"><img class="five" alt="" src="images/val2_plane/plane_22s_bi_12spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+			</tr>
+			<tr>
+				<td><a href="images/val2_plane/plane_180s_pt_320spp.png"><img class="five" alt="" src="images/val2_plane/plane_180s_pt_320spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_180s_bdpt_64spp.png"><img class="five" alt="" src="images/val2_plane/plane_180s_bdpt_64spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_180s_mlt_700spp.png"><img class="five" alt="" src="images/val2_plane/plane_180s_mlt_700spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_180s_uni_150spp.png"><img class="five" alt="" src="images/val2_plane/plane_180s_uni_150spp.png"></a></td>
+				<td><a href="images/val2_plane/plane_180s_bi_100spp.png"><img class="five" alt="" src="images/val2_plane/plane_180s_bi_100spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+			</tr>
+		</table>
+
+		<br>
+
+		<h3>3. surface-medium-surface (3)</h3>
+		<ul>
+			<li>Roughdielectric surface: IOR:1.5, alpha=0.05</li>
+			<li>Isotropic homogeneous Medium: sigmaT:5, albedo:(0.5,0.7,0.95), hg(g=0.95)</li>
+			<li>Roughconductor surface: Cu, alpha=0.01</li>
+		</ul>
+		<table>
+			<tr>
+				<td><b>Global PT</b></td>
+				<td><b>Global BDPT</b></td>
+				<td><b>MLT</b></td>
+				<td><b>Our Unidir</b></td>
+				<td><b>Our Bidir</b></td>
+			</tr>
+			<tr>
+				<td><a href="images/val3_plane/plane_22s_pt_28spp.png"><img class="five" alt="" src="images/val3_plane/plane_22s_pt_28spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_22s_bdpt_6spp.png"><img class="five" alt="" src="images/val3_plane/plane_22s_bdpt_6spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_22s_mlt_10spp.png"><img class="five" alt="" src="images/val3_plane/plane_22s_mlt_10spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_22s_uni_10spp.png"><img class="five" alt="" src="images/val3_plane/plane_22s_uni_10spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_22s_bi_8spp.png"><img class="five" alt="" src="images/val3_plane/plane_22s_bi_8spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+			</tr>
+			<tr>
+				<td><a href="images/val3_plane/plane_180s_pt_225spp.png"><img class="five" alt="" src="images/val3_plane/plane_180s_pt_225spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_180s_bdpt_48spp.png"><img class="five" alt="" src="images/val3_plane/plane_180s_bdpt_48spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_180s_mlt_320spp.png"><img class="five" alt="" src="images/val3_plane/plane_180s_mlt_320spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_180s_uni_80spp.png"><img class="five" alt="" src="images/val3_plane/plane_180s_uni_80spp.png"></a></td>
+				<td><a href="images/val3_plane/plane_180s_bi_64spp.png"><img class="five" alt="" src="images/val3_plane/plane_180s_bi_64spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+			</tr>
+		</table>
+
+		<br>
+
+		<h3>4. surface-medium-surface-medium-surface</h3>
+		<ul>
+			<li>Roughdielectric surface: IOR:1.5, alphaU=0.05, alphaV=0.25</li>
+			<li>Anisotropic homogeneous Medium: density:0.5, albedo:(0.5,0.7,0.95), orientation:(0.5,0.5,0), microflake(stddev=0.05)</li>
+			<li>Roughdielectric surface: IOR:1.2/1.5, alpha=0.01</li>
+			<li>Anisotropic homogeneous Medium: density:0.5, albedo:(0.5,0.95,0.5), orientation:(0.5,-0.5,0), microflake(stddev=0.05)</li>
+			<li>Roughconductor surface: Cu, alpha=0.05</li>
+		</ul>
+		<table>
+			<tr>
+				<td><b>Global PT</b></td>
+				<td><b>Global BDPT</b></td>
+				<td><b>MLT</b></td>
+				<td><b>Our Unidir</b></td>
+				<td><b>Our Bidir</b></td>
+			</tr>
+			<tr>
+				<td><a href="images/val4_plane/plane_18s_pt_25spp.png"><img class="five" alt="" src="images/val4_plane/plane_18s_pt_25spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_18s_bdpt_9spp.png"><img class="five" alt="" src="images/val4_plane/plane_18s_bdpt_9spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_18s_mlt_30spp.png"><img class="five" alt="" src="images/val4_plane/plane_18s_mlt_30spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_18s_uni_13spp.png"><img class="five" alt="" src="images/val4_plane/plane_18s_uni_13spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_18s_bi_8spp.png"><img class="five" alt="" src="images/val4_plane/plane_18s_bi_8spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+				<td>~10s</td>
+			</tr>
+			<tr>
+				<td><a href="images/val4_plane/plane_180s_pt_250spp.png"><img class="five" alt="" src="images/val4_plane/plane_180s_pt_250spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_180s_bdpt_85spp.png"><img class="five" alt="" src="images/val4_plane/plane_180s_bdpt_85spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_180s_mlt_820spp.png"><img class="five" alt="" src="images/val4_plane/plane_180s_mlt_820spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_180s_uni_125spp.png"><img class="five" alt="" src="images/val4_plane/plane_180s_uni_125spp.png"></a></td>
+				<td><a href="images/val4_plane/plane_180s_bi_85spp.png"><img class="five" alt="" src="images/val4_plane/plane_180s_bi_85spp.png"></a></td>
+			</tr>
+			<tr>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+				<td>~100s</td>
+			</tr>
+		</table>
+
+
+		<div class="subtitle" id="bsdfplot">BSDF Evaluation</div>
+		<h4>(Used in Validation 1)</h4>
+		<table>
+			<tr>
+				<td><br><br><br><br><br>Reference:</td>
+				<td><a href="images/val1_plane/bsdf_sample.png"><img class="bsdf" alt="" src="images/val1_plane/bsdf_sample.png"></a></td>
+				<td><a href="images/val1_plane/bsdf_sample_rgb.png"><img class="bsdf" alt="" src="images/val1_plane/bsdf_sample_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our uni-directional:</td>
+				<td><a href="images/val1_plane/bsdf_eval_uni.png"><img class="bsdf" alt="" src="images/val1_plane/bsdf_eval_uni.png"></a></td>
+				<td><a href="images/val1_plane/bsdf_eval_uni_rgb.png"><img class="bsdf" alt="" src="images/val1_plane/bsdf_eval_uni_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our bi-directional:</td>
+				<td><a href="images/val1_plane/bsdf_eval_bi.png"><img class="bsdf" alt="" src="images/val1_plane/bsdf_eval_bi.png"></a></td>
+				<td><a href="images/val1_plane/bsdf_eval_bi_rgb.png"><img class="bsdf" alt="" src="images/val1_plane/bsdf_eval_bi_rgb.png"></a></td>
+			</tr>
+		</table>
+
+		<br><br>
+		
+		<h4>(Used in Validation 2)</h4>
+		<table>
+			<tr>
+				<td><br><br><br><br><br>Reference:</td>
+				<td><a href="images/val2_plane/bsdf_sample.png"><img class="bsdf" alt="" src="images/val2_plane/bsdf_sample.png"></a></td>
+				<td><a href="images/val2_plane/bsdf_sample_rgb.png"><img class="bsdf" alt="" src="images/val2_plane/bsdf_sample_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our uni-directional:</td>
+				<td><a href="images/val2_plane/bsdf_eval_uni.png"><img class="bsdf" alt="" src="images/val2_plane/bsdf_eval_uni.png"></a></td>
+				<td><a href="images/val2_plane/bsdf_eval_uni_rgb.png"><img class="bsdf" alt="" src="images/val2_plane/bsdf_eval_uni_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our bi-directional:</td>
+				<td><a href="images/val2_plane/bsdf_eval_bi.png"><img class="bsdf" alt="" src="images/val2_plane/bsdf_eval_bi.png"></a></td>
+				<td><a href="images/val2_plane/bsdf_eval_bi_rgb.png"><img class="bsdf" alt="" src="images/val2_plane/bsdf_eval_bi_rgb.png"></a></td>
+			</tr>
+		</table>
+
+		<br><br>
+		
+		<h4>(Used in Validation 3)</h4>
+		<table>
+			<tr>
+				<td><br><br><br><br><br>Reference:</td>
+				<td><a href="images/val3_plane/bsdf_sample.png"><img class="bsdf" alt="" src="images/val3_plane/bsdf_sample.png"></a></td>
+				<td><a href="images/val3_plane/bsdf_sample_rgb.png"><img class="bsdf" alt="" src="images/val3_plane/bsdf_sample_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our uni-directional:</td>
+				<td><a href="images/val3_plane/bsdf_eval_uni.png"><img class="bsdf" alt="" src="images/val3_plane/bsdf_eval_uni.png"></a></td>
+				<td><a href="images/val3_plane/bsdf_eval_uni_rgb.png"><img class="bsdf" alt="" src="images/val3_plane/bsdf_eval_uni_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our bi-directional:</td>
+				<td><a href="images/val3_plane/bsdf_eval_bi.png"><img class="bsdf" alt="" src="images/val3_plane/bsdf_eval_bi.png"></a></td>
+				<td><a href="images/val3_plane/bsdf_eval_bi_rgb.png"><img class="bsdf" alt="" src="images/val3_plane/bsdf_eval_bi_rgb.png"></a></td>
+			</tr>
+		</table>
+
+		<br><br>
+		
+		<h4>(Used in Validation 4)</h4>
+		<table>
+			<tr>
+				<td><br><br><br><br><br>Reference:</td>
+				<td><a href="images/val4_plane/bsdf_sample.png"><img class="bsdf" alt="" src="images/val4_plane/bsdf_sample.png"></a></td>
+				<td><a href="images/val4_plane/bsdf_sample_rgb.png"><img class="bsdf" alt="" src="images/val4_plane/bsdf_sample_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our uni-directional:</td>
+				<td><a href="images/val4_plane/bsdf_eval_uni.png"><img class="bsdf" alt="" src="images/val4_plane/bsdf_eval_uni.png"></a></td>
+				<td><a href="images/val4_plane/bsdf_eval_uni_rgb.png"><img class="bsdf" alt="" src="images/val4_plane/bsdf_eval_uni_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br>Our bi-directional:</td>
+				<td><a href="images/val4_plane/bsdf_eval_bi.png"><img class="bsdf" alt="" src="images/val4_plane/bsdf_eval_bi.png"></a></td>
+				<td><a href="images/val4_plane/bsdf_eval_bi_rgb.png"><img class="bsdf" alt="" src="images/val4_plane/bsdf_eval_bi_rgb.png"></a></td>
+			</tr>
+		</table>
+
+		<br><br>
+		
+		<h3>Reflection and transmittance</h3>
+		<table>
+			<tr>
+				<td><br><br><br><br><br><br><br><br><br><br><br><br>Reference:</td>
+				<td><a href="images/lobe2/bsdf_sample_all.png"><img class="bsdf2" alt="" src="images/lobe2/bsdf_sample_all.png"></a></td>
+				<td><a href="images/lobe1/bsdf_sample_rgb.png"><img class="bsdf2" alt="" src="images/lobe1/bsdf_sample_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br><br><br><br><br><br><br><br>Our uni-directional:</td>
+				<td><a href="images/lobe2/bsdf_eval_uni_all.png"><img class="bsdf2" alt="" src="images/lobe2/bsdf_eval_uni_all.png"></a></td>
+				<td><a href="images/lobe1/bsdf_eval_uni_rgb.png"><img class="bsdf2" alt="" src="images/lobe1/bsdf_eval_uni_rgb.png"></a></td>
+			</tr>
+			<tr>
+				<td><br><br><br><br><br><br><br><br><br><br><br><br>Our bi-directional:</td>
+				<td><a href="images/lobe2/bsdf_eval_bi_all.png"><img class="bsdf2" alt="" src="images/lobe2/bsdf_eval_bi_all.png"></a></td>
+				<td><a href="images/lobe1/bsdf_eval_bi_rgb.png"><img class="bsdf2" alt="" src="images/lobe1/bsdf_eval_bi_rgb.png"></a></td>
+			</tr>
+		</table>
+
+
+		<div class="subtitle" id="cloth">Cloth</div>
+		<table>
+			<tr>
+				<td><a href="images/cloth/gabardine_ref_128spp_36min.png"><img class="bsdf" alt="" src="images/cloth/gabardine_ref_128spp_36min.png"></a></td>
+				<td><a href="images/cloth/gabardine_ref_inset_128spp.png"><img class="bsdf" alt="" src="images/cloth/gabardine_ref_inset_128spp.png"></a></td>
+			</tr>
+			<tr>
+				<td><b>Volume Rendering</b></td>
+				<td><b>Volume Rendering (zoom in)</b></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td><a href="images/cloth/gabardine_128spp_2.9min.png"><img class="bsdf" alt="" src="images/cloth/gabardine_128spp_2.9min.png"></a></td>
+				<td><a href="images/cloth/gabardine_inset_128spp.png"><img class="bsdf" alt="" src="images/cloth/gabardine_inset_128spp.png"></a></td>
+			</tr>
+			<tr>
+				<td><b>Ours</b></td>
+				<td><b>Ours (zoom in)</b></td>
+			</tr>
+		</table>
+		<table>
+			<tr>
+				<td><a href="images/cloth/table_128spp_9.1min.png"><img class="bsdf" alt="" src="images/cloth/table_128spp_9.1min.png"></a></td>
+				<td><a href="images/cloth/table_inset_128spp.png"><img class="bsdf" alt="" src="images/cloth/table_inset_128spp.png"></a></td>
+			</tr>
+			<tr>
+				<td><b>Ours</b></td>
+				<td><b>Ours (zoom in)</b></td>
+			</tr>
+		</table>
+
+
+		<div class="subtitle" id="jade">Jade</div>
+		<ul>
+			<li>Fixed: Albedo = [0.4 1 0.8], IOR = 1.65, phase = 0.8*g(0.8) + 0.2*g(-0.8)</li>
+			<li>Varying: sigmaT (optical density)</li>
+		</ul>
+		<table>
+			<tr>
+				<td><a href="images/jade/0.1_0.1.png"><img class="five" alt="" src="images/jade/0.1_0.1.png"></a></td>
+				<td><a href="images/jade/1_0.1.png"><img class="five" alt="" src="images/jade/1_0.1.png"></a></td>
+				<td><a href="images/jade/5_0.1.png"><img class="five" alt="" src="images/jade/5_0.1.png"></a></td>
+				<td><a href="images/jade/10_0.1.png"><img class="five" alt="" src="images/jade/10_0.1.png"></a></td>
+			</tr>
+			<tr>
+				<td>sigmaT = [0.1 1 0.1]</td>
+				<td>sigmaT = [1 1 0.1]</td>
+				<td>sigmaT = [5 1 0.1]</td>
+				<td>sigmaT = [10 1 0.1]</td>
+			</tr>
+			<tr>
+				<td><a href="images/jade/0.1_1.png"><img class="five" alt="" src="images/jade/0.1_1.png"></a></td>
+				<td><a href="images/jade/1_1.png"><img class="five" alt="" src="images/jade/1_1.png"></a></td>
+				<td><a href="images/jade/5_1.png"><img class="five" alt="" src="images/jade/5_1.png"></a></td>
+				<td><a href="images/jade/10_1.png"><img class="five" alt="" src="images/jade/10_1.png"></a></td>
+			</tr>
+			<tr>
+				<td>sigmaT = [0.1 1 1]</td>
+				<td>sigmaT = [1 1 1]</td>
+				<td>sigmaT = [5 1 1]</td>
+				<td>sigmaT = [10 1 1]</td>
+			</tr>
+			<tr>
+				<td><a href="images/jade/0.1_5.png"><img class="five" alt="" src="images/jade/0.1_5.png"></a></td>
+				<td><a href="images/jade/1_5.png"><img class="five" alt="" src="images/jade/1_5.png"></a></td>
+				<td><a href="images/jade/5_5.png"><img class="five" alt="" src="images/jade/5_5.png"></a></td>
+				<td><a href="images/jade/10_5.png"><img class="five" alt="" src="images/jade/10_5.png"></a></td>
+			</tr>
+			<tr>
+				<td>sigmaT = [0.1 1 5]</td>
+				<td>sigmaT = [1 1 5]</td>
+				<td>sigmaT = [5 1 5]</td>
+				<td>sigmaT = [10 1 5]</td>
+			</tr>
+			<tr>
+				<td><a href="images/jade/0.1_10.png"><img class="five" alt="" src="images/jade/0.1_10.png"></a></td>
+				<td><a href="images/jade/1_10.png"><img class="five" alt="" src="images/jade/1_10.png"></a></td>
+				<td><a href="images/jade/5_10.png"><img class="five" alt="" src="images/jade/5_10.png"></a></td>
+				<td><a href="images/jade/10_10.png"><img class="five" alt="" src="images/jade/10_10.png"></a></td>
+			</tr>
+			<tr>
+				<td>sigmaT = [0.1 1 10]</td>
+				<td>sigmaT = [1 1 10]</td>
+				<td>sigmaT = [5 1 10]</td>
+				<td>sigmaT = [10 1 10]</td>
+			</tr>
+		</table>
+
+		<div id="magnifier" class="subtitle">Magnifier</div>
+		<h3>HG phase function</h3>
+		<table>
+			<tr>
+				<td><a href="images/magnifier_hg/magnify_g_1.00_0.90.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.00_0.90.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_1.00_0.93.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.00_0.93.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_1.00_0.96.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.00_0.96.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_1.00_0.99.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.00_0.99.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>g = 0.90, sigmaT = 1.00</td>
+				<td>g = 0.93, sigmaT = 1.00</td>
+				<td>g = 0.96, sigmaT = 1.00</td>
+				<td>g = 0.99, sigmaT = 1.00</td>
+			</tr>
+			<tr>
+				<td><a href="images/magnifier_hg/magnify_g_1.41_0.90.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.41_0.90.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_1.41_0.93.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.41_0.93.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_1.41_0.96.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.41_0.96.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_1.41_0.99.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_1.41_0.99.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>g = 0.90, sigmaT = 1.41</td>
+				<td>g = 0.93, sigmaT = 1.41</td>
+				<td>g = 0.96, sigmaT = 1.41</td>
+				<td>g = 0.99, sigmaT = 1.41</td>
+			</tr>
+			<tr>
+				<td><a href="images/magnifier_hg/magnify_g_2.00_0.90.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.00_0.90.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_2.00_0.93.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.00_0.93.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_2.00_0.96.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.00_0.96.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_2.00_0.99.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.00_0.99.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>g = 0.90, sigmaT = 2.00</td>
+				<td>g = 0.93, sigmaT = 2.00</td>
+				<td>g = 0.96, sigmaT = 2.00</td>
+				<td>g = 0.99, sigmaT = 2.00</td>
+			</tr>
+			<tr>
+				<td><a href="images/magnifier_hg/magnify_g_2.83_0.90.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.83_0.90.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_2.83_0.93.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.83_0.93.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_2.83_0.96.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.83_0.96.jpg"></a></td>
+				<td><a href="images/magnifier_hg/magnify_g_2.83_0.99.jpg"><img class="five" alt="" src="images/magnifier_hg/magnify_g_2.83_0.99.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>g = 0.90, sigmaT = 2.83</td>
+				<td>g = 0.93, sigmaT = 2.83</td>
+				<td>g = 0.96, sigmaT = 2.83</td>
+				<td>g = 0.99, sigmaT = 2.83</td>
+			</tr>
+		</table>
+
+		<h3>vMF phase functions</h3>
+		<table>
+			<tr>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.00_10.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.00_10.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.00_14.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.00_14.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.00_25.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.00_25.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.00_100.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.00_100.00.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>kappa = 10, sigmaT = 1.00</td>
+				<td>kappa = 14, sigmaT = 1.00</td>
+				<td>kappa = 25, sigmaT = 1.00</td>
+				<td>kappa = 100, sigmaT = 1.00</td>
+			</tr>
+			<tr>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.41_10.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.41_10.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.41_14.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.41_14.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.41_25.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.41_25.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_1.41_100.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_1.41_100.00.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>kappa = 10, sigmaT = 1.41</td>
+				<td>kappa = 14, sigmaT = 1.41</td>
+				<td>kappa = 25, sigmaT = 1.41</td>
+				<td>kappa = 100, sigmaT = 1.41</td>
+			</tr>
+			<tr>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.00_10.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.00_10.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.00_14.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.00_14.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.00_25.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.00_25.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.00_100.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.00_100.00.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>kappa = 10, sigmaT = 2.00</td>
+				<td>kappa = 14, sigmaT = 2.00</td>
+				<td>kappa = 25, sigmaT = 2.00</td>
+				<td>kappa = 100, sigmaT = 2.00</td>
+			</tr>
+			<tr>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.83_10.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.83_10.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.83_14.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.83_14.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.83_25.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.83_25.00.jpg"></a></td>
+				<td><a href="images/magnifier_vmf/magnify_vmf_2.83_100.00.jpg"><img class="five" alt="" src="images/magnifier_vmf/magnify_vmf_2.83_100.00.jpg"></a></td>
+			</tr>
+			<tr>
+				<td>kappa = 10, sigmaT = 2.83</td>
+				<td>kappa = 14, sigmaT = 2.83</td>
+				<td>kappa = 25, sigmaT = 2.83</td>
+				<td>kappa = 100, sigmaT = 2.83</td>
+			</tr>
+		</table>
+
+		<div id="ui" class="subtitle">Interactive Tool</div>
+		<h3>Isotropic</h3>
+		<table>
+			<tr>  
+			<th>
+			<img id="img" width="350" height="350">
+
+			<div class="slidecontainer">
+			  <input type="range" min="1.1" max="1.7" value="1.1" step="0.2" class="slider" id="range_eta">
+			  &eta; (1.1~1.7): <font color="red"><b><span id="value_eta"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.1" value="0.01" step="0.03" class="slider" id="range_alphaT">
+			  &alpha;1 (0.01~0.1): <font color="red"><b><span id="value_alphaT"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.1" value="0.01" step="0.03" class="slider" id="range_alphaB">
+			  &alpha;2 (0.01~0.1): <font color="red"><b><span id="value_alphaB"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.6" max="1.5" value="0.6" step="0.3" class="slider" id="range_sigmaT">
+			  &sigma;t (0.6~1.5): <font color="red"><b><span id="value_sigmaT"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0" max="0.9" value="0" step="0.3" class="slider" id="range_g">
+			  g (0~0.9): <font color="red"><b><span id="value_g"></span></b></font>
+			</div>
+			</th>
+
+			<th>
+			<img id="img_2" width="350" height="350">
+
+			<div class="slidecontainer">
+			  <input type="range" min="1.1" max="1.7" value="1.1" step="0.2" class="slider" id="range_eta_2">
+			  &eta; (1.1~1.7): <font color="red"><b><span id="value_eta_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.1" value="0.01" step="0.03" class="slider" id="range_alphaT_2">
+			  &alpha;1 (0.01~0.1): <font color="red"><b><span id="value_alphaT_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.1" value="0.01" step="0.03" class="slider" id="range_alphaB_2">
+			  &alpha;2 (0.01~0.1): <font color="red"><b><span id="value_alphaB_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.6" max="1.5" value="0.6" step="0.3" class="slider" id="range_sigmaT_2">
+			  &sigma;t (0.6~1.5): <font color="red"><b><span id="value_sigmaT_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0" max="0.9" value="0" step="0.3" class="slider" id="range_g_2">
+			  g (0~0.9): <font color="red"><b><span id="value_g_2"></span></b></font>
+			</div>
+			</th>
+			</tr>
+		</table>
+
+		<table>
+		<h3>Anisotropic</h3>
+			<tr>
+			<th>
+			<img id="aniso_img" width="350" height="350">
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.01" value="0.01" step="0.01" class="slider" id="range_aniso_alpha1">
+			  &alpha;1U (.01): <font color="red"><b><span id="value_aniso_alpha1"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.01" value="0.01" step="0.01" class="slider" id="range_aniso_alpha2">
+			  &alpha;1V (.01): <font color="red"><b><span id="value_aniso_alpha2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.22" value="0.01" step="0.07" class="slider" id="range_aniso_alpha3">
+			  &alpha;2U (.01~.22): <font color="red"><b><span id="value_aniso_alpha3"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.22" value="0.01" step="0.07" class="slider" id="range_aniso_alpha4">
+			  &alpha;2V (.01~.22): <font color="red"><b><span id="value_aniso_alpha4"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0" max="150" value="0" step="30" class="slider" id="range_aniso_ori">
+			  Ori (0~150): <font color="red"><b><span id="value_aniso_ori"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.07" value="0.01" step="0.02" class="slider" id="range_aniso_stddev">
+			  Std (.01~.07): <font color="red"><b><span id="value_aniso_stddev"></span></b></font>
+			</div>
+			</th>
+
+			<th>
+			<img id="aniso_img_2" width="350" height="350">
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.01" value="0.01" step="0.01" class="slider" id="range_aniso_alpha1_2">
+			  &alpha;1U (.01): <font color="red"><b><span id="value_aniso_alpha1_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.01" value="0.01" step="0.01" class="slider" id="range_aniso_alpha2_2">
+			  &alpha;1V (.01): <font color="red"><b><span id="value_aniso_alpha2_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.22" value="0.01" step="0.07" class="slider" id="range_aniso_alpha3_2">
+			  &alpha;2U (.01~.22): <font color="red"><b><span id="value_aniso_alpha3_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.22" value="0.01" step="0.07" class="slider" id="range_aniso_alpha4_2">
+			  &alpha;2V (.01~.22): <font color="red"><b><span id="value_aniso_alpha4_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0" max="150" value="0" step="30" class="slider" id="range_aniso_ori_2">
+			  Ori (0~150): <font color="red"><b><span id="value_aniso_ori_2"></span></b></font>
+			</div>
+
+			<div class="slidecontainer">
+			  <input type="range" min="0.01" max="0.07" value="0.01" step="0.02" class="slider" id="range_aniso_stddev_2">
+			  Std (.01~.07): <font color="red"><b><span id="value_aniso_stddev_2"></span></b></font>
+			</div>
+			</th>  
+			</tr>
+
+		</table>
+
+
+		<script>
+
+			var img = document.getElementById("img");
+			img.src = "dataset1/1.1_0.01_0.6_0_0.01.png";
+
+			var eta_this = 1.1;
+			var alphaT_this = 0.01; 
+			var alphaB_this = 0.01;
+			var sigmaT_this = 0.6;
+			var g_this = 0;
+
+			var slider_eta = document.getElementById("range_eta");
+			var output_eta = document.getElementById("value_eta");
+			output_eta.innerHTML = slider_eta.value;
+
+			var slider_alphaT = document.getElementById("range_alphaT");
+			var output_alphaT = document.getElementById("value_alphaT");
+			output_alphaT.innerHTML = slider_alphaT.value;
+
+			var slider_alphaB = document.getElementById("range_alphaB");
+			var output_alphaB = document.getElementById("value_alphaB");
+			output_alphaB.innerHTML = slider_alphaB.value;
+
+			var slider_sigmaT = document.getElementById("range_sigmaT");
+			var output_sigmaT = document.getElementById("value_sigmaT");
+			output_sigmaT.innerHTML = slider_sigmaT.value;
+
+			var slider_g = document.getElementById("range_g");
+			var output_g = document.getElementById("value_g");
+			output_g.innerHTML = slider_g.value;
+
+			slider_eta.oninput = function() {
+			  eta_this = this.value;
+			  output_eta.innerHTML = eta_this;
+			  img.src = "dataset1/" + eta_this + "_" + alphaT_this + "_" + sigmaT_this + "_" + g_this + "_" + alphaB_this + ".png";    
+			}
+
+			slider_alphaT.oninput = function() {
+			  alphaT_this = this.value;
+			  output_alphaT.innerHTML = alphaT_this;
+			  img.src = "dataset1/" + eta_this + "_" + alphaT_this + "_" + sigmaT_this + "_" + g_this + "_" + alphaB_this + ".png";
+			}
+
+			slider_alphaB.oninput = function() {
+			  alphaB_this = this.value;
+			  output_alphaB.innerHTML = alphaB_this;
+			  img.src = "dataset1/" + eta_this + "_" + alphaT_this + "_" + sigmaT_this + "_" + g_this + "_" + alphaB_this + ".png";    
+			}
+
+			slider_sigmaT.oninput = function() {
+			  sigmaT_this = this.value;
+			  output_sigmaT.innerHTML = sigmaT_this;
+			  img.src = "dataset1/" + eta_this + "_" + alphaT_this + "_" + sigmaT_this + "_" + g_this + "_" + alphaB_this + ".png";    
+			}
+
+			slider_g.oninput = function() {
+			  g_this = this.value;
+			  output_g.innerHTML = g_this;
+			  img.src = "dataset1/" + eta_this + "_" + alphaT_this + "_" + sigmaT_this + "_" + g_this + "_" + alphaB_this + ".png";    
+			}
+
+			var img_2 = document.getElementById("img_2");
+			img_2.src = "dataset1/1.1_0.01_0.6_0_0.01.png";
+
+			var eta_this_2 = 1.1;
+			var alphaT_this_2 = 0.01; 
+			var alphaB_this_2 = 0.01;
+			var sigmaT_this_2 = 0.6;
+			var g_this_2 = 0;
+
+			var slider_eta_2 = document.getElementById("range_eta_2");
+			var output_eta_2 = document.getElementById("value_eta_2");
+			output_eta_2.innerHTML = slider_eta_2.value;
+
+			var slider_alphaT_2 = document.getElementById("range_alphaT_2");
+			var output_alphaT_2 = document.getElementById("value_alphaT_2");
+			output_alphaT_2.innerHTML = slider_alphaT_2.value;
+
+			var slider_alphaB_2 = document.getElementById("range_alphaB_2");
+			var output_alphaB_2 = document.getElementById("value_alphaB_2");
+			output_alphaB_2.innerHTML = slider_alphaB_2.value;
+
+			var slider_sigmaT_2 = document.getElementById("range_sigmaT_2");
+			var output_sigmaT_2 = document.getElementById("value_sigmaT_2");
+			output_sigmaT_2.innerHTML = slider_sigmaT_2.value;
+
+			var slider_g_2 = document.getElementById("range_g_2");
+			var output_g_2 = document.getElementById("value_g_2");
+			output_g_2.innerHTML = slider_g_2.value;
+
+			slider_eta_2.oninput = function() {
+			  eta_this_2 = this.value;
+			  output_eta_2.innerHTML = eta_this_2;
+			  img_2.src = "dataset1/" + eta_this_2 + "_" + alphaT_this_2 + "_" + sigmaT_this_2 + "_" + g_this_2 + "_" + alphaB_this_2 + ".png";    
+			}
+
+			slider_alphaT_2.oninput = function() {
+			  alphaT_this_2 = this.value;
+			  output_alphaT_2.innerHTML = alphaT_this_2;
+			  img_2.src = "dataset1/" + eta_this_2 + "_" + alphaT_this_2 + "_" + sigmaT_this_2 + "_" + g_this_2 + "_" + alphaB_this_2 + ".png";
+			}
+
+			slider_alphaB_2.oninput = function() {
+			  alphaB_this_2 = this.value;
+			  output_alphaB_2.innerHTML = alphaB_this_2;
+			  img_2.src = "dataset1/" + eta_this_2 + "_" + alphaT_this_2 + "_" + sigmaT_this_2 + "_" + g_this_2 + "_" + alphaB_this_2 + ".png";    
+			}
+
+			slider_sigmaT_2.oninput = function() {
+			  sigmaT_this_2 = this.value;
+			  output_sigmaT_2.innerHTML = sigmaT_this_2;
+			  img_2.src = "dataset1/" + eta_this_2 + "_" + alphaT_this_2 + "_" + sigmaT_this_2 + "_" + g_this_2 + "_" + alphaB_this_2 + ".png";    
+			}
+
+			slider_g_2.oninput = function() {
+			  g_this_2 = this.value;
+			  output_g_2.innerHTML = g_this_2;
+			  img_2.src = "dataset1/" + eta_this_2 + "_" + alphaT_this_2 + "_" + sigmaT_this_2 + "_" + g_this_2 + "_" + alphaB_this_2 + ".png";    
+			}
+
+			var aniso_img = document.getElementById("aniso_img");
+			aniso_img.src = "dataset2/0.01_0.01_0.01_0.01_0_0.01.png";
+
+			var aniso_alpha1_this = 0.01;
+			var aniso_alpha2_this = 0.01; 
+			var aniso_alpha3_this = 0.01;
+			var aniso_alpha4_this = 0.01; 
+			var aniso_ori_this = 0;
+			var aniso_stddev_this = 0.01;
+
+			var slider_aniso_alpha1 = document.getElementById("range_aniso_alpha1");
+			var output_aniso_alpha1 = document.getElementById("value_aniso_alpha1");
+			output_aniso_alpha1.innerHTML = slider_aniso_alpha1.value;
+
+			var slider_aniso_alpha2 = document.getElementById("range_aniso_alpha2");
+			var output_aniso_alpha2 = document.getElementById("value_aniso_alpha2");
+			output_aniso_alpha2.innerHTML = slider_aniso_alpha2.value;
+
+			var slider_aniso_alpha3 = document.getElementById("range_aniso_alpha3");
+			var output_aniso_alpha3 = document.getElementById("value_aniso_alpha3");
+			output_aniso_alpha3.innerHTML = slider_aniso_alpha3.value;
+
+			var slider_aniso_alpha4 = document.getElementById("range_aniso_alpha4");
+			var output_aniso_alpha4 = document.getElementById("value_aniso_alpha4");
+			output_aniso_alpha4.innerHTML = slider_aniso_alpha4.value;
+
+			var slider_aniso_ori = document.getElementById("range_aniso_ori");
+			var output_aniso_ori = document.getElementById("value_aniso_ori");
+			output_aniso_ori.innerHTML = slider_aniso_ori.value;
+
+			var slider_aniso_stddev = document.getElementById("range_aniso_stddev");
+			var output_aniso_stddev = document.getElementById("value_aniso_stddev");
+			output_aniso_stddev.innerHTML = slider_aniso_stddev.value;
+
+
+			slider_aniso_alpha1.oninput = function() {
+			  aniso_alpha1_this = this.value;
+			  output_aniso_alpha1.innerHTML = aniso_alpha1_this;
+			  aniso_img.src = "dataset2/" + aniso_alpha1_this + "_" + aniso_alpha2_this + "_" + aniso_alpha3_this + "_" + aniso_alpha4_this + "_" + aniso_ori_this + "_" + aniso_stddev_this + ".png";    
+			}
+
+			slider_aniso_alpha2.oninput = function() {
+			  aniso_alpha2_this = this.value;
+			  output_aniso_alpha2.innerHTML = aniso_alpha2_this;
+			  aniso_img.src = "dataset2/" + aniso_alpha1_this + "_" + aniso_alpha2_this + "_" + aniso_alpha3_this + "_" + aniso_alpha4_this + "_" + aniso_ori_this + "_" + aniso_stddev_this + ".png";    
+			 }
+
+			slider_aniso_alpha3.oninput = function() {
+			  aniso_alpha3_this = this.value;
+			  output_aniso_alpha3.innerHTML = aniso_alpha3_this;
+			  aniso_img.src = "dataset2/" + aniso_alpha1_this + "_" + aniso_alpha2_this + "_" + aniso_alpha3_this + "_" + aniso_alpha4_this + "_" + aniso_ori_this + "_" + aniso_stddev_this + ".png";    
+			}
+
+			slider_aniso_alpha4.oninput = function() {
+			  aniso_alpha4_this = this.value;
+			  output_aniso_alpha4.innerHTML = aniso_alpha4_this;
+			  aniso_img.src = "dataset2/" + aniso_alpha1_this + "_" + aniso_alpha2_this + "_" + aniso_alpha3_this + "_" + aniso_alpha4_this + "_" + aniso_ori_this + "_" + aniso_stddev_this + ".png";    
+			}
+
+			slider_aniso_ori.oninput = function() {
+			  aniso_ori_this = this.value;
+			  output_aniso_ori.innerHTML = aniso_ori_this;
+			  aniso_img.src = "dataset2/" + aniso_alpha1_this + "_" + aniso_alpha2_this + "_" + aniso_alpha3_this + "_" + aniso_alpha4_this + "_" + aniso_ori_this + "_" + aniso_stddev_this + ".png";    
+			}
+
+			slider_aniso_stddev.oninput = function() {
+			  aniso_stddev_this = this.value;
+			  output_aniso_stddev.innerHTML = aniso_stddev_this;
+			  aniso_img.src = "dataset2/" + aniso_alpha1_this + "_" + aniso_alpha2_this + "_" + aniso_alpha3_this + "_" + aniso_alpha4_this + "_" + aniso_ori_this + "_" + aniso_stddev_this + ".png";    
+			}
+
+			var aniso_img_2 = document.getElementById("aniso_img_2");
+			aniso_img_2.src = "dataset2/0.01_0.01_0.01_0.01_0_0.01.png";
+
+			var aniso_alpha1_this_2 = 0.01;
+			var aniso_alpha2_this_2 = 0.01; 
+			var aniso_alpha3_this_2 = 0.01;
+			var aniso_alpha4_this_2 = 0.01; 
+			var aniso_ori_this_2 = 0;
+			var aniso_stddev_this_2 = 0.01;
+
+			var slider_aniso_alpha1_2 = document.getElementById("range_aniso_alpha1_2");
+			var output_aniso_alpha1_2 = document.getElementById("value_aniso_alpha1_2");
+			output_aniso_alpha1_2.innerHTML = slider_aniso_alpha1_2.value;
+
+			var slider_aniso_alpha2_2 = document.getElementById("range_aniso_alpha2_2");
+			var output_aniso_alpha2_2 = document.getElementById("value_aniso_alpha2_2");
+			output_aniso_alpha2_2.innerHTML = slider_aniso_alpha2_2.value;
+
+			var slider_aniso_alpha3_2 = document.getElementById("range_aniso_alpha3_2");
+			var output_aniso_alpha3_2 = document.getElementById("value_aniso_alpha3_2");
+			output_aniso_alpha3_2.innerHTML = slider_aniso_alpha3_2.value;
+
+			var slider_aniso_alpha4_2 = document.getElementById("range_aniso_alpha4_2");
+			var output_aniso_alpha4_2 = document.getElementById("value_aniso_alpha4_2");
+			output_aniso_alpha4_2.innerHTML = slider_aniso_alpha4_2.value;
+
+			var slider_aniso_ori_2 = document.getElementById("range_aniso_ori_2");
+			var output_aniso_ori_2 = document.getElementById("value_aniso_ori_2");
+			output_aniso_ori_2.innerHTML = slider_aniso_ori_2.value;
+
+			var slider_aniso_stddev_2 = document.getElementById("range_aniso_stddev_2");
+			var output_aniso_stddev_2 = document.getElementById("value_aniso_stddev_2");
+			output_aniso_stddev_2.innerHTML = slider_aniso_stddev_2.value;
+
+
+			slider_aniso_alpha1_2.oninput = function() {
+			  aniso_alpha1_this_2 = this.value;
+			  output_aniso_alpha1_2.innerHTML = aniso_alpha1_this_2;
+			  aniso_img_2.src = "dataset2/" + aniso_alpha1_this_2 + "_" + aniso_alpha2_this_2 + "_" + aniso_alpha3_this_2 + "_" + aniso_alpha4_this_2 + "_" + aniso_ori_this_2 + "_" + aniso_stddev_this_2 + ".png";    
+			}
+
+			slider_aniso_alpha2_2.oninput = function() {
+			  aniso_alpha2_this_2 = this.value;
+			  output_aniso_alpha2_2.innerHTML = aniso_alpha2_this_2;
+			  aniso_img_2.src = "dataset2/" + aniso_alpha1_this_2 + "_" + aniso_alpha2_this_2 + "_" + aniso_alpha3_this_2 + "_" + aniso_alpha4_this_2 + "_" + aniso_ori_this_2 + "_" + aniso_stddev_this_2 + ".png";    
+			 }
+
+			slider_aniso_alpha3_2.oninput = function() {
+			  aniso_alpha3_this_2 = this.value;
+			  output_aniso_alpha3_2.innerHTML = aniso_alpha3_this_2;
+			  aniso_img_2.src = "dataset2/" + aniso_alpha1_this_2 + "_" + aniso_alpha2_this_2 + "_" + aniso_alpha3_this_2 + "_" + aniso_alpha4_this_2 + "_" + aniso_ori_this_2 + "_" + aniso_stddev_this_2 + ".png";    
+			}
+
+			slider_aniso_alpha4_2.oninput = function() {
+			  aniso_alpha4_this_2 = this.value;
+			  output_aniso_alpha4_2.innerHTML = aniso_alpha4_this_2;
+			  aniso_img_2.src = "dataset2/" + aniso_alpha1_this_2 + "_" + aniso_alpha2_this_2 + "_" + aniso_alpha3_this_2 + "_" + aniso_alpha4_this_2 + "_" + aniso_ori_this_2 + "_" + aniso_stddev_this_2 + ".png";    
+			}
+
+			slider_aniso_ori_2.oninput = function() {
+			  aniso_ori_this_2 = this.value;
+			  output_aniso_ori_2.innerHTML = aniso_ori_this_2;
+			  aniso_img_2.src = "dataset2/" + aniso_alpha1_this_2 + "_" + aniso_alpha2_this_2 + "_" + aniso_alpha3_this_2 + "_" + aniso_alpha4_this_2 + "_" + aniso_ori_this_2 + "_" + aniso_stddev_this_2 + ".png";    
+			}
+
+			slider_aniso_stddev_2.oninput = function() {
+			  aniso_stddev_this_2 = this.value;
+			  output_aniso_stddev_2.innerHTML = aniso_stddev_this_2;
+			  aniso_img_2.src = "dataset2/" + aniso_alpha1_this_2 + "_" + aniso_alpha2_this_2 + "_" + aniso_alpha3_this_2 + "_" + aniso_alpha4_this_2 + "_" + aniso_ori_this_2 + "_" + aniso_stddev_this_2 + ".png";    
+			}
+
+		</script>
+
+	</div>
+
+</body>
+</html>

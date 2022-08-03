@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<scene version="0.6.0">
+	
+
+	<bsdf type="multilayered" id="Material">
+		<boolean name="bidir" value="true"/>
+		<string name="pdf" value="const"/>
+		<integer name="stochPdfDepth" value="4"/>
+		<integer name="pdfRepetitive" value="1"/>
+		<float name="diffusePdf" value="0.01"/>
+		<boolean name="bidirUseAnalog" value="true"/>
+		<float name="maxSurvivalProb" value="1"/>
+
+		<integer name="nbLayers" value="3"/>
+
+
+		<!-- surface s[0] -->
+		<bsdf type="roughdielectric" name="surface_0">
+			<float name="extIOR" value="1.0"/>
+			<float name="intIOR" value="1.5"/>
+			<float name="alpha" value="0.1"/>
+		</bsdf>
+		<texture type="bitmap" name="normal_tex_0">
+			<string name="filename" value="xml/normal/topnormal.exr"/>
+		</texture>
+
+		<!-- medium m[0]-->
+		<spectrum name="sigmaT_0" value="0.5"/>
+		<spectrum name="albedo_0" value="0.5 0.7 0.95"/>
+		<float name="g_0" value="-0.95"/>
+
+		<!-- surface s[1]-->
+		<bsdf type="roughdielectric" name="surface_1">
+			<float name="extIOR" value="1.5"/>
+			<float name="intIOR" value="1.2"/>
+			<float name="alpha" value="0.01"/>
+		</bsdf>
+<!-- 		<texture type="bitmap" name="normal_1">
+			<string name="filename" value="xml/normal/middlenormal.exr"/>
+		</texture> -->
+
+		<!-- medium m[1]-->
+		<spectrum name="sigmaT_1" value="2"/>
+		<spectrum name="albedo_1" value="0.5 0.95 0.5"/>
+		<float name="g_1" value="0.85"/>
+
+		<!-- surface s[2]-->
+		<bsdf type="roughdielectric" name="surface_2">
+			<float name="extIOR" value="1.5"/>
+			<float name="intIOR" value="1.0"/>
+			<float name="alpha" value="0.1"/>
+			<!-- <string name="material" value="Au"/> -->
+		</bsdf>		
+		<texture type="bitmap" name="normal_tex_2">
+			<string name="filename" value="xml/normal/bottomnormal.exr"/>
+		</texture>		
+
+	</bsdf>
+
+	<shape type="rectangle">
+		<transform name="toWorld">
+			<scale x="1" y="1"/>
+			<rotate x="1" angle="0"/>
+			<translate x="0" y="0" z="0"/>
+		</transform>
+		<ref id="Material"/>
+	</shape>
+
+
+</scene>
