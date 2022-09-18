@@ -5,6 +5,8 @@ In ACM Transactions on Graphics (SIGGRAPH Asia 2018).
 
 ## Downloads:
 * [Paper](https://github.com/tflsguoyu/layeredbsdf_paper/blob/master/layeredbsdf.pdf)
+* [Code](https://github.com/tflsguoyu/layeredbsdf)
+
 * [Supplemental Materials](https://tflsguoyu.github.io/layeredbsdf_suppl/)
 * [Poster](https://github.com/tflsguoyu/layeredbsdf_poster/blob/master/layeredbsdf_poster.pdf)
 * [Fastforward on Siggraph Asia 2018](https://youtu.be/v5u6LYCN_PU)([Slides](https://www.dropbox.com/s/zirw16peipdtq70/layeredbsdf_ff.pptx?dl=0))
